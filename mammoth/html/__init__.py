@@ -19,7 +19,7 @@ def element(tag_names, attributes=None, children=None, collapsible=None, separat
         children = []
         
     element_tag = tag(tag_names=tag_names, attributes=attributes, collapsible=collapsible, separator=separator)
-    return Element(element_tag, children)
+    return Element(element_tag, children, style={})
 
 
 def collapsible_element(tag_names, attributes=None, children=None):
@@ -49,7 +49,7 @@ class StripEmpty(NodeVisitor):
         if len(children) == 0 and not element.is_void():
             return []
         else:
-            return [Element(element.tag, children)]
+            return [Element(element.tag, children, style=element.style or {})]
     
     def visit_force_write(self, node):
         return [node]
@@ -68,7 +68,7 @@ class _CollapseNode(NodeVisitor):
         return node
     
     def visit_element(self, element):
-        return Element(element.tag, collapse(element.children))
+        return Element(element.tag, collapse(element.children), style=element.style or {})
     
     def visit_force_write(self, node):
         return node

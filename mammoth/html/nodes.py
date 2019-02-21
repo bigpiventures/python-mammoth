@@ -26,6 +26,7 @@ class Tag(object):
 class Element(Node):
     tag = cobble.field()
     children = cobble.field()
+    style = cobble.field()
     
     @property
     def tag_name(self):
@@ -37,7 +38,7 @@ class Element(Node):
 
     @property
     def attributes(self):
-        return self.tag.attributes
+        return {**self.tag.attributes, **(self.style if self.style and self.tag_name in ['p', 'ol'] else {})}
         
     @property
     def collapsible(self):

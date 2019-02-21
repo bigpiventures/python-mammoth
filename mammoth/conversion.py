@@ -103,7 +103,8 @@ class _DocumentConverter(documents.element_visitor(args=1)):
                 return [html.force_write] + content
 
         html_path = self._find_html_path_for_paragraph(paragraph)
-        return html_path.wrap(children)
+
+        return html_path.wrap(children, node=paragraph)
 
 
     def visit_run(self, run, context):
